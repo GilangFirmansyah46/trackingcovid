@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProvinsiController;
+use App\Http\Controllers\KotaController;
+use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KelurahanController;
+use App\Http\Controllers\RwController;
+use App\Http\Controllers\TrackingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,26 +30,17 @@ Route::get('/index', function () {
     return view('layouts.master.index');
 });
 
-Route::get('admin',function(){
-    return view('admin.index');
-});
+// Route::get('admin',function(){
+//     return view('admin.index');
+// });
 Route::resource('provinsi', ProvinsiController::class);
-Route::get('/kota', function () {
-    return view('admin.kota.index');
-});
 
-Route::get('/kecamatan', function () {
-    return view('admin.kecamatan.index');
-});
+Route::resource('kota', KotaController::class);
 
-Route::get('/kelurahan', function () {
-    return view('admin.kelurahan.index');
-});
+Route::resource('kecamatan', KecamatanController::class);
 
-Route::get('/rw', function () {
-    return view('admin.rw.index');
-});
+Route::resource('kelurahan', KelurahanController::class);
 
-Route::get('/laporan', function () {
-    return view('admin.laporan.index');
-});
+Route::resource('rw', RwController::class);
+
+Route::resource('tracking', TrackingController::class);

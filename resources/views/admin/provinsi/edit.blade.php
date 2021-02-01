@@ -3,29 +3,40 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Edit Provinsi</div>
-
+                <div class="card-header">
+                    Tambah Data Provinsi
+                </div>
                 <div class="card-body">
-                <form action="{{route('provinsi.update',$provinsi->id)}}" method="POST">
-                   @csrf
-                   @method('PATCH')
-                    <div class="form-group">
-                        <label>Kode provinsi</label>
-                        <input type="text" name="kode_provinsi" value="{{$provinsi->provinsi}}" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Provinsi</label>
-                        <input type="text" name="nama_provinsi" value="{{$provinsi->provinsi}}" class="form-control" required>
-                    </div>
-
-
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Ubah</button>
-                    </div>
-                    </div>
-                </form>
+                {{-- menampilkan error validasi --}}
+                            @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                
+                    <form action="{{route('provinsi.update',$provinsi->id)}}" method="post">
+                        <input type="hidden" nama="_method" value="PUT">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Kode Provinsi</label>
+                            <input type="text" name="kode_provinsi" value="{{$provinsi->kode_provinsi}}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nama Provinsi</label>
+                            <input type="text" name="nama_provinsi" value="{{$provinsi->nama_provinsi}}" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -1,29 +1,51 @@
 @extends('layouts.master.index')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Tambah Provinsi</div>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CRUD</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card mt-5">
+                <div class="card-header text-center">
+                
+                    <h4>Tambah Data</h4>
+                </div>
                 <div class="card-body">
-                <form action="{{route('provinsi.store')}}" method="POST">
-                   @csrf
-                    <div class="form-group">
-                        <label>Kode Provinsi</label>
-                        <input type="text" name="kode_provinsi" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Provinsi</label>
-                        <input type="text" name="nama_provinsi" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                    </div>
-                </form>
+                {{-- menampilkan error validasi --}}
+                            @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            
+                    <form action="{{ route('provinsi.store')}}" method="POST">
+                    @csrf
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Kode Provinsi</label>
+                            <input type="text" name="kode_provinsi" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text"></div>
+                            </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Nama Provinsi</label>
+                            <input type="text" name="nama_provinsi" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                        </div>
+                    </div>            
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </body>
+</html>
 @endsection

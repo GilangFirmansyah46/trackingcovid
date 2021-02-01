@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kota;
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class ProvinsiController extends Controller
+class KotaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class ProvinsiController extends Controller
      */
     public function index()
     {
-        $provinsi = Provinsi::all();
-        return view('admin.provinsi.index',compact('provinsi'));
+        $kota = Kota::with('provinsi')->get();
+        return view('admin.kota.index',compact('kota'));
     }
 
     /**
@@ -26,7 +26,8 @@ class ProvinsiController extends Controller
      */
     public function create()
     {
-        return view('admin.provinsi.create');
+        $provinsi = Provinsi::all();
+        return view('admin.kota.create', compact('provinsi'));
     }
 
     /**
@@ -37,91 +38,98 @@ class ProvinsiController extends Controller
      */
     public function store(Request $request)
     {
-        $provinsi = new Provinsi();
+        $kota = new Kota();
         $messages = [
             'required' => ':attribute wajib diisi ya !!!',
             'min' => ':attribute harus diisi minimal :min karakter ya !!!',
             'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi huruf ya !!!',
+            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
             'numeric' => ':attribute harus diisi dengan angka ya !!!',
             'unique' => ':attribute tidak boleh sama ya !!!',
         ];
 
         $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
+            'kode_kota' => 'required|numeric|unique:kotas|max:98',
+            'nama_kota' => 'required|regex:/^[a-z A-Z]+$/u|unique:kotas|max:98',
+            'id_provinsi' => 'required|numeric',
         ],$messages);
 
-        $provinsi->kode_provinsi = $request->kode_provinsi;
-        $provinsi->nama_provinsi = $request->nama_provinsi;
-        $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Buat']);
+        $kota->kode_kota = $request->kode_kota;
+        $kota->nama_kota = $request->nama_kota;
+        $kota->id_provinsi = $request->id_provinsi;
+        $kota->save();
+        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Tambah']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $provinsi = Provinsi::findOrFail($id);
-        return view('admin.provinsi.show',compact('provinsi'));
+        $kota = Kota::findOrFail($id);
+        $provinsi = Provinsi::all();
+        return view('admin.kota.show',compact('kota','provinsi'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $provinsi = Provinsi::findOrFail($id);
-        return view('admin.provinsi.edit',compact('provinsi'));
+        $kota = Kota::findOrFail($id);
+        $provinsi = Provinsi::all();
+        $selected = $kota->provinsi->pluck('id')->toArray();
+        return view('admin.kota.edit',compact('kota','provinsi','selected'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-     
-        $provinsi = Provinsi::findOrFail($id);
         $messages = [
             'required' => ':attribute wajib diisi ya !!!',
             'min' => ':attribute harus diisi minimal :min karakter ya !!!',
             'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha_num' => ':attribute tidak boleh sama ya !!!',
+            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
             'numeric' => ':attribute harus diisi dengan angka ya !!!',
             'unique' => ':attribute tidak boleh sama ya !!!',
         ];
 
         $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
+            'kode_kota' => 'required|numeric|unique:kotas|max:98',
+            'nama_kota' => 'required|regex:/^[a-z A-Z]+$/u|unique:kotas|max:98',
+            'id_provinsi' => 'required|numeric',
         ],$messages);
 
-        $provinsi->kode_provinsi = $request->kode_provinsi;
-        $provinsi->nama_provinsi = $request->nama_provinsi;
-        $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Edit']);
+        $kota = Kota::findOrFail($id);
+        $kota->kode_kota = $request->kode_kota;
+        $kota->nama_kota = $request->nama_kota;
+        $kota->id_provinsi = $request->id_provinsi;
+        $kota->save();
+        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Edit']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $provinsi = Provinsi::findOrFail($id)->delete();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Hapus']);
+        $kota = Kota::findOrFail($id);
+        $kota->delete();
+        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Hapus']);
     }
 }

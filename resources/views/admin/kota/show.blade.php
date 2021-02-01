@@ -9,11 +9,15 @@
                 <div class="card-body">
                     <div class="form-group">
                     <label>Kode Provinsi</label>
-                    <input type="text" name="kode_provinsi" value="{{$provinsi->kode_provinsi}}" class="form-control" readonly>
+                    <input type="text" name="kode_kota" value="{{$kota->kode_kota}}" class="form-control" readonly>
                     </div>
                     <div class="form-group">
-                    <label>Nama Provinsi</label>
-                    <input type="text" name="nama_provinsi" value="{{$provinsi->nama_provinsi}}" class="form-control" readonly>
+                    <label>Nama Kota</label>
+                    <input type="text" name="kode_provinsi" value="{{$kota->nama_kota}}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Asal Provinsi</label>
+                        <input type="text" name="id_provinsi" class="form-control" value="{{$kota->provinsi->nama_provinsi}}" readonly>
                     </div>
                     <div class="form-group">
                     <a href="{{url()->previous()}}" class="btn btn-primary">Kembali</a>

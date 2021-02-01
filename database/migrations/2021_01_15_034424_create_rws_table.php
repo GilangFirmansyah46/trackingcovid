@@ -16,7 +16,7 @@ class CreateRwsTable extends Migration
         Schema::create('rws', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_kelurahan')->unsigned();
-            $table->string('nama');
+            $table->string('id_rw');
             $table->timestamps();
 
             $table->foreign('id_kelurahan')->references('id')->on('kelurahans')

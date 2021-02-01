@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provinsi;
+use App\Models\Kecamatan;
+use App\Models\Kota;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class ProvinsiController extends Controller
+class KecamatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class ProvinsiController extends Controller
      */
     public function index()
     {
-        $provinsi = Provinsi::all();
-        return view('admin.provinsi.index',compact('provinsi'));
+        $kecamatan = Kecamatan::with('kota')->get();
+        return view('admin.kecamatan.index',compact('kecamatan'));
     }
 
     /**
@@ -26,7 +26,8 @@ class ProvinsiController extends Controller
      */
     public function create()
     {
-        return view('admin.provinsi.create');
+        $kota = Kota::all();
+        return view('admin.kecamatan.create',compact('kota'));
     }
 
     /**
@@ -37,25 +38,27 @@ class ProvinsiController extends Controller
      */
     public function store(Request $request)
     {
-        $provinsi = new Provinsi();
+        $kecamatan = new Kecamatan();
         $messages = [
             'required' => ':attribute wajib diisi ya !!!',
             'min' => ':attribute harus diisi minimal :min karakter ya !!!',
             'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi huruf ya !!!',
+            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
             'numeric' => ':attribute harus diisi dengan angka ya !!!',
             'unique' => ':attribute tidak boleh sama ya !!!',
         ];
 
         $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
+            'kode_kecamatan' => 'required|numeric|unique:kecamatans|max:7094',
+            'nama_kecamatan' => 'required|regex:/^[a-z A-Z]+$/u|unique:kecamatans|max:7094',
+            'id_kota' => 'required|numeric',
         ],$messages);
 
-        $provinsi->kode_provinsi = $request->kode_provinsi;
-        $provinsi->nama_provinsi = $request->nama_provinsi;
-        $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Buat']);
+        $kecamatan->kode_kecamatan = $request->kode_kecamatan;
+        $kecamatan->nama_kecamatan = $request->nama_kecamatan;
+        $kecamatan->id_kota = $request->id_kota;
+        $kecamatan->save();
+        return redirect()->route('kecamatan.index')->with(['message'=>'Data Kecamatan Berhasil Di Tambah']);
     }
 
     /**
@@ -66,8 +69,9 @@ class ProvinsiController extends Controller
      */
     public function show($id)
     {
-        $provinsi = Provinsi::findOrFail($id);
-        return view('admin.provinsi.show',compact('provinsi'));
+        $kecamatan = Kecamatan::findOrFail($id);
+        $kota = Kota::all();
+        return view('admin.kecamatan.show',compact('kecamatan','kota'));
     }
 
     /**
@@ -78,8 +82,10 @@ class ProvinsiController extends Controller
      */
     public function edit($id)
     {
-        $provinsi = Provinsi::findOrFail($id);
-        return view('admin.provinsi.edit',compact('provinsi'));
+        $kecamatan = Kecamatan::findOrFail($id);
+        $kota = Kota::all();
+        $selected = $kecamatan->kota->pluck('id')->toArray();
+        return view('admin.kecamatan.edit',compact('kecamatan', 'kota', 'selected'));
     }
 
     /**
@@ -92,25 +98,27 @@ class ProvinsiController extends Controller
     public function update(Request $request, $id)
     {
      
-        $provinsi = Provinsi::findOrFail($id);
+        $kecamatan = Kecamatan::findOrFail($id);
         $messages = [
             'required' => ':attribute wajib diisi ya !!!',
             'min' => ':attribute harus diisi minimal :min karakter ya !!!',
             'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha_num' => ':attribute tidak boleh sama ya !!!',
+            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
             'numeric' => ':attribute harus diisi dengan angka ya !!!',
             'unique' => ':attribute tidak boleh sama ya !!!',
         ];
 
         $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
+            'kode_kecamatan' => 'required|numeric|unique:kecamatans|max:7094',
+            'nama_kecamatan' => 'required|regex:/^[a-z A-Z]+$/u|unique:kecamatans|max:7094',
+            'id_kota' => 'required|numeric',
         ],$messages);
 
-        $provinsi->kode_provinsi = $request->kode_provinsi;
-        $provinsi->nama_provinsi = $request->nama_provinsi;
-        $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Edit']);
+        $kecamatan->kode_kecamatan = $request->kode_kecamatan;
+        $kecamatan->nama_kecamatan = $request->nama_kecamatan;
+        $kecamatan->id_kota = $request->id_kota;
+        $kecamatan->save();
+        return redirect()->route('kecamatan.index')->with(['message'=>'Data Kecamatan Berhasil Di Edit']);
     }
 
     /**
@@ -121,7 +129,7 @@ class ProvinsiController extends Controller
      */
     public function destroy($id)
     {
-        $provinsi = Provinsi::findOrFail($id)->delete();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Hapus']);
+        $kecamatan = Kecamatan::findOrFail($id)->delete();
+        return redirect()->route('kecamatan.index')->with(['message'=>'Data Kecamatan Berhasil Di Hapus']);
     }
 }

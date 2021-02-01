@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKasus2sTable extends Migration
+class CreateTrackingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateKasus2sTable extends Migration
      */
     public function up()
     {
-        Schema::create('kasus2s', function (Blueprint $table) {
+        Schema::create('trackings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_rw')->unsigned();
             $table->string('jumlah_positif');
@@ -34,6 +34,6 @@ class CreateKasus2sTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kasus2s');
+        Schema::dropIfExists('trackings');
     }
 }
