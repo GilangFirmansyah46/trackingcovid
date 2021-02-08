@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProvinsiController extends Controller
 {
@@ -26,6 +25,7 @@ class ProvinsiController extends Controller
      */
     public function create()
     {
+
         return view('admin.provinsi.create');
     }
 
@@ -37,31 +37,22 @@ class ProvinsiController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'kode_provinsi' => 'required|unique:provinsis|max:255',
+            'nama_provinsi' => 'required|unique:provinsis|max:255',
+        ]);
         $provinsi = new Provinsi();
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'min' => ':attribute harus diisi minimal :min karakter ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi huruf ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
-        ],$messages);
-
         $provinsi->kode_provinsi = $request->kode_provinsi;
         $provinsi->nama_provinsi = $request->nama_provinsi;
         $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Buat']);
+        return redirect()->route('provinsi.index')
+        ->with(['succes'=>'Data <b>',$provinsi->nama_provinsi,'</b> berhasil di input']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\Provinsi  $provinsi
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -73,7 +64,7 @@ class ProvinsiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\Provinsi  $provinsi
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -86,42 +77,30 @@ class ProvinsiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\Provinsi  $provinsi
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-     
         $provinsi = Provinsi::findOrFail($id);
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'min' => ':attribute harus diisi minimal :min karakter ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha_num' => ':attribute tidak boleh sama ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'kode_provinsi' => 'required|numeric|unique:provinsis|max:34',
-            'nama_provinsi' => 'required|unique:provinsis|regex:/^[a-z A-Z]+$/u|min:4|max:34',
-        ],$messages);
-
         $provinsi->kode_provinsi = $request->kode_provinsi;
         $provinsi->nama_provinsi = $request->nama_provinsi;
         $provinsi->save();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Edit']);
+        return redirect()->route('provinsi.index')
+        ->with(['succes'=>'Data <b>',$provinsi->nama_provinsi,'</b> berhasil di ubah']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\provinsi  $provinsi
+     * @param  \App\Models\Provinsi  $provinsi
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $provinsi = Provinsi::findOrFail($id)->delete();
-        return redirect()->route('provinsi.index')->with(['message'=>'Data Provinsi Berhasil Di Hapus']);
+        $provinsi = Provinsi::findOrFail($id);
+        $provinsi->delete();
+        return redirect()->route('provinsi.index')
+        ->with(['succes'=>'Data <b>',$provinsi->nama_provinsi,'</b> berhasil di hapus']);;
     }
 }

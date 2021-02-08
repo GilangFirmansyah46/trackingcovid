@@ -8,10 +8,6 @@
                 <div class="card-header">Show kecamatan</div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Kode Kecamatan</label>
-                        <input type="text" name="kode_kecamatan" value="{{$kecamatan->kode_kecamatan}}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
                         <label>Nama Kecamatan</label>
                         <input type="text" name="nama_kecamatan" value="{{$kecamatan->nama_kecamatan}}" class="form-control" readonly>
                     </div>

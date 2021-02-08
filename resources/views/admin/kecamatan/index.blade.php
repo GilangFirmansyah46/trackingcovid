@@ -22,8 +22,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Kode Kecamatan</th>
+                                    <th>No</th>         
                                     <th>Nama Kecamatan</th>
                                     <th>Nama Kota</th>
                                     <th colspan="3"><center>Aksi</center></th>
@@ -37,7 +36,6 @@
                                 @method('DELETE')
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$data->kode_kecamatan}}</td>
                                         <td>{{$data->nama_kecamatan}}</td>
                                         <td>{{$data->kota->nama_kota}}</td>
                                         <td>

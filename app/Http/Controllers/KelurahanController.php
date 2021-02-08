@@ -38,20 +38,10 @@ class KelurahanController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nama_kelurahan' => 'required|unique:kelurahans|max:255',
+        ]);
         $kelurahan = new Kelurahan();
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'nama_kelurahan' => 'required|regex:/^[a-z A-Z]+$/u|unique:kelurahans|max:8490',
-            'id_kecamatan' => 'required|numeric',
-        ],$messages);
-
         $kelurahan->nama_kelurahan = $request->nama_kelurahan;
         $kelurahan->id_kecamatan = $request->id_kecamatan;
         $kelurahan->save();
@@ -96,19 +86,6 @@ class KelurahanController extends Controller
     {
      
         $kelurahan = Kelurahan::findOrFail($id);
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'nama_kelurahan' => 'required|regex:/^[a-z A-Z]+$/u|unique:kelurahans|max:8490',
-            'id_kecamatan' => 'required|numeric',
-        ],$messages);
-
         $kelurahan->nama_kelurahan = $request->nama_kelurahan;
         $kelurahan->id_kecamatan = $request->id_kecamatan;
         $kelurahan->save();

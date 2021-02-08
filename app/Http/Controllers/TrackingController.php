@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tracking;
 use App\Models\Rw;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
 class TrackingController extends Controller
@@ -33,6 +34,7 @@ class TrackingController extends Controller
     {
         $rw = Rw::all();
         return view('admin.tracking.create',compact('rw'));
+        
     }
 
     /**
@@ -44,9 +46,9 @@ class TrackingController extends Controller
     public function store(Request $request)
     {
         $tracking = new Tracking();
-        $tracking->jumlah_positif = $request->jumlah_positif;
-        $tracking->jumlah_sembuh = $request->jumlah_sembuh;
-        $tracking->jumlah_meninggal = $request->jumlah_meninggal;
+        $tracking->positif = $request->positif;
+        $tracking->sembuh = $request->sembuh;
+        $tracking->meninggal = $request->meninggal;
         $tracking->tanggal = $request->tanggal;
         $tracking->id_rw = $request->id_rw;
         $tracking->save();
@@ -74,7 +76,9 @@ class TrackingController extends Controller
     public function edit($id)
     {
         $tracking = Tracking::findOrFail($id);
-        return view('admin.tracking.edit',compact('tracking'));
+        $rw = Rw::all();
+        $selected = $tracking->rw->pluck('id')->toArray();
+        return view('admin.tracking.edit',compact('tracking','rw','selected'));
     }
 
     /**
@@ -87,9 +91,9 @@ class TrackingController extends Controller
     public function update(Request $request, $id)
     { 
         $tracking = Tracking::findOrFail($id);
-        $tracking->jumlah_positif = $request->jumlah_positif;
-        $tracking->jumlah_sembuh = $request->jumlah_sembuh;
-        $tracking->jumlah_meninggal = $request->jumlah_meninggal;
+        $tracking->positif = $request->positif;
+        $tracking->sembuh = $request->sembuh;
+        $tracking->meninggal = $request->meninggal;
         $tracking->tanggal = $request->tanggal;
         $tracking->id_rw = $request->id_rw;
         $tracking->save();

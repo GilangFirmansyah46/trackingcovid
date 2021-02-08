@@ -14,14 +14,11 @@ class CreateKecamatansTable extends Migration
     public function up()
     {
         Schema::create('kecamatans', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('id_kota')->unsigned();
-            $table->integer('kode_kecamatan');
+            $table->increments('id');
+            $table->unsignedInteger('id_kota');
+            $table->foreign('id_kota')->references('id')->on('kotas')->onDelete('cascade');
             $table->string('nama_kecamatan');
             $table->timestamps();
-
-            $table->foreign('id_kota')->references('id')->on('kotas')
-            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

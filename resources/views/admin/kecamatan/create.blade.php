@@ -22,12 +22,6 @@
                     <form action="{{ route('kecamatan.store')}}" method="POST">
                         @csrf
                         
-                        <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Kode Kecamatan</label>
-                          <input type="text" name="kode_kecamatan" class="form-control" id="exampleInputEmail1" 
-                          aria-describedby="emailHelp">
-                          <div id="emailHelp" class="form-text"></div>
-                        </div>
 
                         <div class="mb-3">
                           <label for="exampleInputPassword1" class="form-label">Nama Kecamatan</label>

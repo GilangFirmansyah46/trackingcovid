@@ -44,3 +44,7 @@ Route::resource('kelurahan', KelurahanController::class);
 Route::resource('rw', RwController::class);
 
 Route::resource('tracking', TrackingController::class);
+
+// Route::group(['prefix' => 'admin','middleware'=>['auth']], function (){
+//     Route::resource('tracking', TrackingController::class);
+// });

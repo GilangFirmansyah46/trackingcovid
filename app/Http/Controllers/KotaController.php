@@ -27,7 +27,8 @@ class KotaController extends Controller
     public function create()
     {
         $provinsi = Provinsi::all();
-        return view('admin.kota.create', compact('provinsi'));
+        return view('admin.kota.create',compact('provinsi'));
+
     }
 
     /**
@@ -38,33 +39,22 @@ class KotaController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'kode_kota' => 'required|unique:kotas|max:255',
+            'nama_kota' => 'required|unique:kotas|max:255',
+        ]);
         $kota = new Kota();
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'min' => ':attribute harus diisi minimal :min karakter ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'kode_kota' => 'required|numeric|unique:kotas|max:98',
-            'nama_kota' => 'required|regex:/^[a-z A-Z]+$/u|unique:kotas|max:98',
-            'id_provinsi' => 'required|numeric',
-        ],$messages);
-
         $kota->kode_kota = $request->kode_kota;
         $kota->nama_kota = $request->nama_kota;
         $kota->id_provinsi = $request->id_provinsi;
         $kota->save();
-        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Tambah']);
+        return redirect()->route('kota.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\kota  $kota
+     * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -77,7 +67,7 @@ class KotaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\kota  $kota
+     * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,44 +82,29 @@ class KotaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\kota  $kota
+     * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'min' => ':attribute harus diisi minimal :min karakter ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha' => ':attribute harus diisi dengan huruf ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'kode_kota' => 'required|numeric|unique:kotas|max:98',
-            'nama_kota' => 'required|regex:/^[a-z A-Z]+$/u|unique:kotas|max:98',
-            'id_provinsi' => 'required|numeric',
-        ],$messages);
-
         $kota = Kota::findOrFail($id);
         $kota->kode_kota = $request->kode_kota;
         $kota->nama_kota = $request->nama_kota;
         $kota->id_provinsi = $request->id_provinsi;
         $kota->save();
-        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Edit']);
+        return redirect()->route('kota.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\kota  $kota
+     * @param  \App\Models\Kota  $kota
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $kota = Kota::findOrFail($id);
         $kota->delete();
-        return redirect()->route('kota.index')->with(['message'=>'Data Kota Berhasil Di Hapus']);
+        return redirect()->route('kota.index');
     }
 }

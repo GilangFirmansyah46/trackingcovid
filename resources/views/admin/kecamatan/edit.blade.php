@@ -23,12 +23,6 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Kode Kota</label>
-                          <input type="text" name="kode_kecamatan" value="{{$kecamatan->kode_kecamatan}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                          <div id="emailHelp" class="form-text" required=""></div>
-                        </div>
-
-                        <div class="mb-3">
                           <label for="exampleInputPassword1" class="form-label">Nama Kecamatan</label>
                           <input type="text" name="nama_kecamatan" value="{{$kecamatan->nama_kecamatan}}" class="form-control" id="exampleInputPassword1">
                         </div>

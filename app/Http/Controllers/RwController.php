@@ -38,20 +38,10 @@ class RwController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'nama_rw' => 'required|unique:rws|max:255',
+        ]);
         $rw = new Rw();
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha_num' => ':attribute harus diisi dengan huruf dan angka ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'nama_rw' => 'required|alpha_num|unique:rws|max:74957',
-            'id_kelurahan' => 'required|numeric',
-        ],$messages);
-
         $rw->nama_rw = $request->nama_rw;
         $rw->id_kelurahan = $request->id_kelurahan;
         $rw->save();
@@ -96,19 +86,6 @@ class RwController extends Controller
     {
      
         $rw = Rw::findOrFail($id);
-        $messages = [
-            'required' => ':attribute wajib diisi ya !!!',
-            'max' => ':attribute harus diisi maksimal :max karakter ya !!!',
-            'alpha_num' => ':attribute harus diisi dengan huruf dan angka ya !!!',
-            'numeric' => ':attribute harus diisi dengan angka ya !!!',
-            'unique' => ':attribute tidak boleh sama ya !!!',
-        ];
-
-        $this->validate($request,[
-            'nama_rw' => 'required|alpha_num|unique:rws|max:74957',
-            'id_kelurahan' => 'required|numeric',
-        ],$messages);
-
         $rw->nama_rw = $request->nama_rw;
         $rw->id_kelurahan = $request->id_kelurahan;
         $rw->save();
