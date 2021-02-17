@@ -42,4 +42,5 @@ Route::get('/kelurahan/{id}', [ApiController::class, 'showkelurahan']);
 Route::get('/rw', [ApiController::class, 'rw']);
 Route::get('/rw/{id}', [ApiController::class, 'showrw']);
 
+//per negara
 Route::get('negara',[ ApiController::class,'negara']);

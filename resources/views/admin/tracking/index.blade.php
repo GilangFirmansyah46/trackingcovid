@@ -32,7 +32,7 @@
                                             <th scope="col"><center>Sembuh</center></th>
                                             <th scope="col"><center>Meninggal</center></th>
                                             <th scope="col"><center>Tanggal</center></th>
-                                            <th scope="col"><center>Action</center></th>
+                                            <th scope="col"><center>Aksi</center></th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -7,6 +7,7 @@ use App\Http\Controllers\KecamatanController;
 use App\Http\Controllers\KelurahanController;
 use App\Http\Controllers\RwController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\FrontendController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +22,11 @@ use App\Http\Controllers\TrackingController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/', function () {
+//     return view('frontend');
+// });
+
 
 Auth::routes();
 
@@ -45,6 +51,14 @@ Route::resource('rw', RwController::class);
 
 Route::resource('tracking', TrackingController::class);
 
+// Route::get('frontend', function () {
+//     return view('frontend.frontend');
+// });
+
+Route::resource('/frontend', FrontendController::class);
+
 // Route::group(['prefix' => 'admin','middleware'=>['auth']], function (){
 //     Route::resource('tracking', TrackingController::class);
 // });
+
+// @include('frontend.frontend')

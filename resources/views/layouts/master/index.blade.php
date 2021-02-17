@@ -131,30 +131,10 @@ The above copyright notice and this permission notice shall be included in all c
       </nav>
       <!-- End Navbar -->
 
-      <li class="nav-item ">
-            <a class="nav-link" >
-      <div class="card-body">
-        @if (session('status'))
-          <div class="alert alert-success" role="alert">
-              {{ session('status') }}
-          </div>
-              @endif
-              <center>
-              
-              <h2>
-              <section class="content">
-              <div class="container-fluid">
-              @yield('content')
-              </div>
-              </section>
-              </h2>  
-              </center>     
-      </div>
-            </a>
-      </li>
+      <br><br><br>
+      @yield('content')
       
-      
-  <div class="fixed-plugin">
+  <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
       <a href="#" data-toggle="dropdown">
         <i class="fa fa-cog fa-2x"> </i>
@@ -177,7 +157,7 @@ The above copyright notice and this permission notice shall be included in all c
 
       </ul>
     </div>
-  </div>
+  </div> -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
