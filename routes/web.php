@@ -19,14 +19,9 @@ use App\Http\Controllers\FrontendController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
-
-// Route::get('/', function () {
-//     return view('frontend');
-// });
-
 
 Auth::routes();
 
@@ -51,14 +46,4 @@ Route::resource('rw', RwController::class);
 
 Route::resource('tracking', TrackingController::class);
 
-// Route::get('frontend', function () {
-//     return view('frontend.frontend');
-// });
-
-Route::resource('/frontend', FrontendController::class);
-
-// Route::group(['prefix' => 'admin','middleware'=>['auth']], function (){
-//     Route::resource('tracking', TrackingController::class);
-// });
-
-// @include('frontend.frontend')
+Route::resource('/', FrontendController::class);

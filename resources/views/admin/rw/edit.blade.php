@@ -24,7 +24,7 @@
                         @method('PUT')
 
                         <div class="mb-3">
-                          <label for="exampleInputPassword1" class="form-label">Nama Rw</label>
+                          <label for="exampleInputPassword1" class="form-label">Rw</label>
                           <input type="text" name="nama_rw" value="{{$rw->nama_rw}}" class="form-control" id="exampleInputPassword1">
                         </div>
                         

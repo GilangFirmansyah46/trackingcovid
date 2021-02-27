@@ -22,7 +22,7 @@
                     <form action="{{ route('rw.store')}}" method="POST">
                         @csrf
                         <div class="mb-3">
-                          <label for="exampleInputEmail1" class="form-label">Nama Rw</label>
+                          <label for="exampleInputEmail1" class="form-label">Rw</label>
                           <input type="text" name="nama_rw" class="form-control" id="exampleInputEmail1" 
                           aria-describedby="emailHelp">
                           <div id="emailHelp" class="form-text"></div>

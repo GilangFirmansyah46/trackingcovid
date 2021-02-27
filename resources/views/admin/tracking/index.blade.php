@@ -58,7 +58,7 @@
                                             @method('DELETE')
                                             <center>
                                             <a href="{{route('tracking.edit',$data->id)}}" class="btn btn-success">EDIT<i></a></i>
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin Hapus?')">DELETE<i class="fa fa-trash-alt">
+                                            <button type="submit" onclick="return confirm('Apakah anda yakin?');" class="btn btn-danger">Delete</button>
                                             </form>
                                         </tr>
                                     @endforeach

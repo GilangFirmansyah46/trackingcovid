@@ -1,62 +1,57 @@
 @extends('layouts.master.index')
+
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header"><br>
-                    Daftar Kota
-                <a href="{{route('kota.create')}}" class="btn btn-primary float-right">
-                Tambah Data</a>
+            <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Kota
+                        <a href=" {{route('kota.create')}} " class="btn btn-primary" style="float: right;">Tambah Data</a>
+                    </h6>
                 </div>
-
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Nomor</th>
+                                    <th>No</th>
                                     <th>Kode Kota</th>
                                     <th>Nama Kota</th>
                                     <th>Provinsi</th>
-                                    <th colspan="3"><center>Aksi</center></th>
+                                    <th><center>Aksi</center></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $no=1; @endphp
-                                @foreach ($kota as $data)
-                                <form action="{{route('kota.destroy',$data->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($kota as $item)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$data->kode_kota}}</td>
-                                        <td>{{$data->nama_kota}}</td>
-                                        <td>{{$data->provinsi->nama_provinsi}}</td>
-                                        <form action="{{route('kota.destroy',$data->id)}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
+                                        <td> {{$item->kode_kota}}</td>
+                                        <td> {{$item->nama_kota}} </td>
+                                        <td> {{$item->provinsi->nama_provinsi}} </td>
                                         <td>
-                                            <a href="{{route('kota.show',$data->id)}}" class="btn btn-info">Show</a>
+                                            <center>
+                                                <form action="{{ route('kota.destroy', $item->id) }}" method="post">
+                                                    @csrf
+                                                    @method('Delete')
+                                                    <a href="{{route('kota.show',$item->id)}}" class="btn btn-info">
+                                                        Show
+                                                    </a>
+                                                    <a class="btn btn-success" href=" {{route('kota.edit', $item->id)}} ">
+                                                        Edit
+                                                    </a> 
+                                                    <button type="submit" onclick="return confirm('Apakah anda yakin?');" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </center>
                                         </td>
-                                        <td>    
-                                            <a href="{{route('kota.edit',$data->id)}}" class="btn btn-success">Edit</a>
-                                        </td>
-                                        <td>    
-                                            <button type="submit" onclick="return confirm('Apakah anda yakin?');" class="btn btn-danger">Delete</button>
-                                        </td>
-                                        </form>
                                     </tr>
-                                </form>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
                     </div>
                 </div>
             </div>

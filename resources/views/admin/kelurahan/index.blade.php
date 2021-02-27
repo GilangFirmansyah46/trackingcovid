@@ -4,51 +4,48 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    Daftar Kelurahan
-                <a href="{{route('kelurahan.create')}}" class="btn btn-primary float-right">
-                Tambah Data</a>
+            <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        Kelurahan
+                        <a href=" {{route('kelurahan.create')}} " class="btn btn-primary" style="float: right;">Tambah Data</a>
+                    </h6>
                 </div>
-
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Kelurahan</th>
-                                    <th>Nama kecamatan</th>
-                                    <th colspan="3"><center>Aksi</center></th>
+                                    <th>Nama Kecamatan</th>
+                                    <th><center>Aksi</center></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $no=1; @endphp
-                                @foreach ($kelurahan as $data)
-                                <form action="{{route('kelurahan.destroy',$data->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                                @php
+                                    $no = 1;
+                                @endphp
+                                @foreach ($kelurahan as $item)
                                     <tr>
                                         <td>{{$no++}}</td>
-                                        <td>{{$data->nama_kelurahan}}</td>
-                                        <td>{{$data->kecamatan->nama_kecamatan}}</td>
+                                        <td> {{$item->nama_kelurahan}} </td>
+                                        <td> {{$item->kecamatan->nama_kecamatan}} </td>
                                         <td>
-                                            <a href="{{route('kelurahan.show',$data->id)}}" class="btn btn-info">Show</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{route('kelurahan.edit',$data->id)}}" class="btn btn-success">Edit</a>
-                                        </td>
-                                        <td>
-                                            <button type="submit" onclick="return confirm('Apakah anda yakin?');" class="btn btn-danger">Delete</button>
+                                            <center>
+                                                <form action="{{ route('kelurahan.destroy', $item->id) }}" method="post">
+                                                    @csrf
+                                                    @method('Delete')<a class="btn btn-info" href=" {{route('kelurahan.show', $item->id)}} ">
+                                                        Show
+                                                    </a>
+                                                    <a class="btn btn-success" href=" {{route('kelurahan.edit', $item->id)}} ">
+                                                        Edit
+                                                    </a> 
+                                                    <button type="submit" onclick="return confirm('Apakah anda yakin?');" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </center>
                                         </td>
                                     </tr>
-                                </form>
                                 @endforeach
                             </tbody>
                         </table>
@@ -59,4 +56,3 @@
     </div>
 </div>
 @endsection
- 
